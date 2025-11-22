@@ -18,9 +18,9 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import TogglePurple from './components/TogglePurple.vue';
-import SelectColor from './components/SelectColor.vue';
-import CircleProperty from './components/CircleProperty.vue';
+import TogglePurple from '@/components/TogglePurple.vue';
+import SelectColor from '@/components/SelectColor.vue';
+import CircleProperty from '@/components/CircleProperty.vue';
 
 const isPurple = ref<boolean>(false);
 const textColor = ref<string>('');
