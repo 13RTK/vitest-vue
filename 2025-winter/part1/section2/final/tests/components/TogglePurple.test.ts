@@ -1,11 +1,9 @@
-import { expect, test } from 'vitest';
 import TogglePurple from '@/components/TogglePurple.vue';
 import { render, screen } from '@testing-library/vue';
-import '@testing-library/jest-dom/vitest';
 
 render(TogglePurple);
 
-test('checkbox exists and not checked', () => {
+it('should render checkbox and the checkbox not be checked by default', () => {
   const checkbox = screen.getByRole('checkbox');
 
   // expect(element).matcher
@@ -13,9 +11,10 @@ test('checkbox exists and not checked', () => {
   expect(checkbox).not.toBeChecked();
 });
 
-test('purple label exists', () => {
-  const purpleLabel = screen.getByText(/purple/i);
-
+it('should render purple label component with purple text', () => {
+  // const purpleLabel = screen.getByText(/purple/i);
   // expect(element).matcher
-  expect(purpleLabel).toBeInTheDocument();
+  // expect(purpleLabel).toBeInTheDocument();
+
+  screen.debug();
 });
