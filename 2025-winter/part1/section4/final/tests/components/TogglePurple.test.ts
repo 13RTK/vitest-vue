@@ -1,24 +1,36 @@
 import TogglePurple from '@/components/TogglePurple.vue';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/vue';
 
-describe('TogglePurple render test', () => {
+describe('TogglePurple', () => {
   beforeEach(() => {
     render(TogglePurple);
   });
 
-  it('should render checkbox and the checkbox not be checked by default', () => {
-    const checkbox = screen.getByRole('checkbox');
+  describe('render test', () => {
+    it('should render checkbox and the checkbox not be checked by default', () => {
+      const checkbox = screen.getByRole('checkbox');
 
-    // expect(element).matcher
-    expect(checkbox).toBeInTheDocument();
-    expect(checkbox).not.toBeChecked();
+      // expect(element).matcher
+      expect(checkbox).toBeInTheDocument();
+      expect(checkbox).not.toBeChecked();
+    });
+
+    it('should render purple label component with purple text', () => {
+      const purpleLabel = screen.getByText(/purple/i);
+      // expect(element).matcher
+      expect(purpleLabel).toBeInTheDocument();
+    });
   });
 
-  it('should render purple label component with purple text', () => {
-    const purpleLabel = screen.getByText(/purple/i);
-    // expect(element).matcher
-    expect(purpleLabel).toBeInTheDocument();
+  describe('user interaction', () => {
+    it('should be checked after user click', async () => {
+      const checkbox = screen.getByRole('checkbox');
+      const user = userEvent.setup();
 
-    // screen.debug();
+      await user.click(checkbox);
+
+      expect(checkbox).toBeChecked();
+    });
   });
 });
