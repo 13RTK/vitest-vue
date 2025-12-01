@@ -34,5 +34,35 @@ describe('SelectColor', () => {
 
       expect(options).toHaveLength(3);
     });
+
+    it.each([
+      { optionValue: '', label: 'white' },
+      { optionValue: 'text-black', label: 'black' },
+      { optionValue: 'text-orange', label: 'orange' },
+    ])(
+      'should display $label after user click the $label option',
+      async ({ optionValue }) => {
+        render(SelectColor);
+
+        const select = screen.getByRole('combobox');
+        const user = userEvent.setup();
+
+        await user.selectOptions(select, optionValue);
+
+        expect(select).toHaveValue(optionValue);
+      }
+    );
+    // it('should display black after user click the black option', async () => {
+    //   render(SelectColor);
+
+    //   const optionValue = 'text-black';
+
+    //   const select = screen.getByRole('combobox');
+    //   const user = userEvent.setup();
+
+    //   await user.selectOptions(select, optionValue);
+
+    //   expect(select).toHaveValue(optionValue);
+    // });
   });
 });
