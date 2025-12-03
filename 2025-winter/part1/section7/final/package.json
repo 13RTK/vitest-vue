@@ -24,6 +24,7 @@
     "@tsconfig/node22": "^22.0.2",
     "@types/node": "^22.18.11",
     "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/coverage-v8": "4.0.15",
     "@vitest/ui": "^4.0.14",
     "@vue/tsconfig": "^0.8.1",
     "jsdom": "^27.2.0",
