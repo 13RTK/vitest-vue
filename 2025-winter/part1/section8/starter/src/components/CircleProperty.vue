@@ -1,6 +1,6 @@
 <template>
   <label>
-    Circle Size
+    <slot />
     <input type="number" v-model="property" />
   </label>
 </template>

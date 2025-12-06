@@ -4,8 +4,8 @@
 
     <SelectColor v-model:textColor="textColor" />
 
-    <CircleProperty v-model:property="size" />
-    <CircleProperty v-model:property="rotate" />
+    <CircleProperty v-model:property="size"> Circle Size </CircleProperty>
+    <CircleProperty v-model:property="rotate"> Circle Rotate </CircleProperty>
 
     <div
       :class="['circle', { purple: isPurple }, textColor]"
