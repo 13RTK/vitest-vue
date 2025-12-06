@@ -21,7 +21,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8', // or 'istanbul'
       enabled: true,
-      include: ['src/**/*.{ts,vue}'],
+      include: ['src/components/*.{ts,vue}'],
     },
   },
 });
