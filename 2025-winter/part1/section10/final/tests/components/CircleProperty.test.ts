@@ -22,8 +22,8 @@ describe('CircleProperty', () => {
     });
 
     it('should render the label with correct text', () => {
+      // Arrange
       cleanup();
-
       const slotText = 'Component Test';
       render(CircleProperty, {
         slots: {
@@ -31,21 +31,26 @@ describe('CircleProperty', () => {
         },
       });
 
+      // Act
       const label = screen.getByText(slotText);
 
+      // Assert
       expect(label).toBeInTheDocument();
     });
   });
 
   describe('user interaction', () => {
     it('should display the correct number in the input after user type', async () => {
+      // Arrange
       const input = screen.getByRole('spinbutton');
       const inputNumber = 30;
-
       const user = userEvent.setup();
+
+      // Act
       await user.click(input);
       await user.keyboard(inputNumber.toString());
 
+      // Assert
       expect(input).toHaveValue(inputNumber);
     });
   });
