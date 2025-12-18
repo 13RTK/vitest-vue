@@ -1,17 +1,18 @@
 import App from '@/App.vue';
-import { render, screen } from '@testing-library/vue';
-import userEvent from '@testing-library/user-event';
+import { render } from 'vitest-browser-vue';
+import { userEvent } from 'vitest/browser';
 
 it('should display correct color after user click', async () => {
   // Arrange
-  render(App);
-  const button = screen.getByRole('button');
-  const user = userEvent.setup();
+  const { getByRole } = render(App);
+  const button = getByRole('button');
 
   // Act
-  await user.click(button);
-  const backgroundColor = window.getComputedStyle(button).backgroundColor;
+  await userEvent.click(button);
+  const backgroundColor = window.getComputedStyle(
+    button.element()
+  ).backgroundColor;
 
   // Assert
-  expect(backgroundColor).toBe('rgba(245, 34, 45, 1)');
+  expect(backgroundColor).toBe('rgb(245, 34, 45)');
 });
