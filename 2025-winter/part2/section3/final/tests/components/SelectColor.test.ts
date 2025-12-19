@@ -1,36 +1,37 @@
-import { render, screen } from '@testing-library/vue';
-import userEvent from '@testing-library/user-event';
 import SelectColor from '@/components/SelectColor.vue';
+import { render } from 'vitest-browser-vue';
+import { userEvent } from 'vitest/browser';
 
 describe('SelectColor', () => {
+  function renderComponent() {
+    return render(SelectColor);
+  }
+
   describe('render test', () => {
-    it('should render the select element correctly', () => {
-      render(SelectColor);
+    it('should render the select element correctly', async () => {
+      const { getByRole } = renderComponent();
 
-      const select = screen.getByRole('combobox');
+      const select = getByRole('combobox');
 
-      expect(select).toBeInTheDocument();
+      await expect.element(select).toBeInTheDocument();
     });
 
-    it('should render the label element with correct text', () => {
-      render(SelectColor);
+    it('should render the label element with correct text', async () => {
+      const { getByText } = renderComponent();
 
-      const label = screen.getByText(/text color/i);
+      const label = getByText(/text color/i);
 
-      expect(label).toBeInTheDocument();
+      await expect.element(label).toBeInTheDocument();
     });
   });
 
   describe('user interaction', () => {
     it('should display the options with correct count', async () => {
-      render(SelectColor);
+      const { getByRole } = renderComponent();
+      const select = getByRole('combobox');
 
-      const select = screen.getByRole('combobox');
-      const user = userEvent.setup();
-
-      await user.click(select);
-
-      const options = screen.getAllByRole('option');
+      await userEvent.click(select);
+      const options = getByRole('option').elements();
 
       expect(options).toHaveLength(3);
     });
@@ -42,14 +43,12 @@ describe('SelectColor', () => {
     ])(
       'should display $label after user click the $label option',
       async ({ optionValue }) => {
-        render(SelectColor);
+        const { getByRole } = renderComponent();
 
-        const select = screen.getByRole('combobox');
-        const user = userEvent.setup();
+        const select = getByRole('combobox');
+        await userEvent.selectOptions(select, optionValue);
 
-        await user.selectOptions(select, optionValue);
-
-        expect(select).toHaveValue(optionValue);
+        await expect.element(select).toHaveValue(optionValue);
       }
     );
     // it('should display black after user click the black option', async () => {

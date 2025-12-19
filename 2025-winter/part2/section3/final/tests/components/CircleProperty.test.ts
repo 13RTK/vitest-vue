@@ -1,57 +1,56 @@
-import { cleanup, render, screen } from '@testing-library/vue';
-import userEvent from '@testing-library/user-event';
 import CircleProperty from '@/components/CircleProperty.vue';
+import { render } from 'vitest-browser-vue';
+import { userEvent } from 'vitest/browser';
 
 describe('CircleProperty', () => {
-  beforeEach(() => {
-    render(CircleProperty, {
+  function renderComponent(slot?: string) {
+    return render(CircleProperty, {
       slots: {
-        default: 'Circle Property',
+        default: slot || 'Circle Property',
       },
       props: {
         property: 0,
       },
     });
-  });
+  }
 
   describe('render test', () => {
-    it('should render the input correctly', () => {
-      const input = screen.getByRole('spinbutton');
+    it('should render the input correctly', async () => {
+      const { getByRole } = renderComponent();
 
-      expect(input).toBeInTheDocument();
+      const input = getByRole('spinbutton');
+
+      await expect.element(input).toBeInTheDocument();
     });
 
-    it('should render the label with correct text', () => {
+    it('should render the label with correct text', async () => {
       // Arrange
-      cleanup();
       const slotText = 'Component Test';
-      render(CircleProperty, {
-        slots: {
-          default: slotText,
-        },
-      });
+      const { getByText } = renderComponent(slotText);
 
       // Act
-      const label = screen.getByText(slotText);
+      const label = getByText(slotText);
 
       // Assert
-      expect(label).toBeInTheDocument();
+      await expect.element(label).toBeInTheDocument();
     });
   });
 
   describe('user interaction', () => {
     it('should display the correct number in the input after user type', async () => {
       // Arrange
-      const input = screen.getByRole('spinbutton');
+      const { getByRole } = renderComponent();
+
+      const input = getByRole('spinbutton');
       const inputNumber = 30;
-      const user = userEvent.setup();
 
       // Act
-      await user.click(input);
-      await user.keyboard(inputNumber.toString());
+      await userEvent.clear(input);
+      await userEvent.click(input);
+      await userEvent.keyboard(inputNumber.toString());
 
       // Assert
-      expect(input).toHaveValue(inputNumber);
+      await expect.element(input).toHaveValue(inputNumber);
     });
   });
 });

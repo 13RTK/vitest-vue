@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 
 import { fileURLToPath, URL } from 'node:url';
+import { playwright } from '@vitest/browser-playwright';
 
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -15,13 +16,18 @@ export default defineConfig({
     },
   },
   test: {
-    environment: 'jsdom',
     globals: true,
-    setupFiles: ['./tests/setup.ts'],
     coverage: {
       provider: 'v8', // or 'istanbul'
       enabled: true,
       include: ['src/components/*.{ts,vue}'],
+    },
+
+    browser: {
+      enabled: true,
+      provider: playwright(),
+      // https://vitest.dev/config/browser/playwright
+      instances: [{ browser: 'chromium' }],
     },
   },
 });
