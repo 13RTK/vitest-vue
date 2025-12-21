@@ -1,4 +1,7 @@
+/// <reference types="vitest/config" />
+
 import { fileURLToPath, URL } from 'node:url';
+import { playwright } from '@vitest/browser-playwright';
 
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
@@ -15,6 +18,16 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+
+  test: {
+    globals: true,
+    browser: {
+      enabled: true,
+      provider: playwright(),
+      // https://vitest.dev/config/browser/playwright
+      instances: [{ browser: 'chromium' }],
     },
   },
 });

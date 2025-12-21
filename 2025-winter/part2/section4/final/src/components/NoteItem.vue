@@ -10,12 +10,14 @@
         <button
           class="btn btn-square btn-accent lg:btn-lg cursor-pointer"
           @click="openEditModal"
+          aria-label="edit-button"
         >
           <PhPencilLine :size="24" weight="thin" />
         </button>
         <button
           @click.prevent="deleteNote(note.id)"
           class="btn btn-square btn-error lg:btn-lg"
+          aria-label="delete-button"
         >
           <span v-if="isDeleting" class="loading loading-spinner"></span>
           <PhTrash v-else :size="24" weight="thin" />
@@ -30,7 +32,7 @@
 <script setup lang="ts">
 import { openModal } from '@/composables/model';
 import { deleteNoteById } from '@/services/apiNote';
-import { useNoteStore } from '@/stores/counter';
+import { useNoteStore } from '@/stores/note';
 import type { Note } from '@/types/Note';
 import { PhPencilLine, PhTrash } from '@phosphor-icons/vue';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';

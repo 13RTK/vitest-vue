@@ -57,7 +57,7 @@ import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useToast } from 'vue-toastification';
 
 import { closeModal } from '@/composables/model';
-import { useNoteStore } from '@/stores/counter';
+import { useNoteStore } from '@/stores/note';
 import {
   updateNoteById,
   createNote as createNoteApi,

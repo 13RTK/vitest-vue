@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { openModal } from '@/composables/model';
-import { useNoteStore } from '@/stores/counter';
+import { useNoteStore } from '@/stores/note';
 import type { Note } from '@/types/Note';
 import { storeToRefs } from 'pinia';
 import { PhPlus } from '@phosphor-icons/vue';
