@@ -3,8 +3,10 @@
 
   <ErrorAlert v-if="isError">{{ error?.message }}</ErrorAlert>
 
-  <NoteItem v-if="isSuccess" v-for="note in notes" :key="note.id" :note />
-  <EditModal v-if="isSuccess" />
+  <main>
+    <NoteItem v-if="isSuccess" v-for="note in notes" :key="note.id" :note />
+    <EditModal v-if="isSuccess" />
+  </main>
 </template>
 
 <script setup lang="ts">

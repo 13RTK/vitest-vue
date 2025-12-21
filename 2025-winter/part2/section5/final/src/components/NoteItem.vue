@@ -1,5 +1,5 @@
 <template>
-  <div class="collapse bg-base-100 border border-base-300">
+  <li class="collapse bg-base-100 border border-base-300">
     <input type="radio" name="my-accordion-1" defaultChecked />
     <div
       class="collapse-title font-semibold lg:text-4xl flex justify-between items-center pr-3"
@@ -26,7 +26,7 @@
     </div>
 
     <div class="collapse-content text-sm lg:text-lg">{{ note.content }}</div>
-  </div>
+  </li>
 </template>
 
 <script setup lang="ts">
