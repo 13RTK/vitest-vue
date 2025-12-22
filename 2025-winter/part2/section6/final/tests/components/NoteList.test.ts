@@ -5,11 +5,23 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import { render } from 'vitest-browser-vue';
 
+vi.mock('@/services/apiNote');
+
 describe('NoteList', () => {
   function renderComponent() {
+    const vueQueryPluginOptions = {
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            retry: false,
+          },
+        },
+      },
+    };
+
     return render(NoteList, {
       global: {
-        plugins: [createPinia(), VueQueryPlugin],
+        plugins: [createPinia(), [VueQueryPlugin, vueQueryPluginOptions]],
       },
     });
   }
@@ -29,7 +41,6 @@ describe('NoteList', () => {
           content: 'content',
         },
       ];
-      vi.mock('@/services/apiNote');
       vi.mocked(getNotes).mockResolvedValue(mockNotes);
       const { getByRole } = renderComponent();
 
@@ -42,6 +53,27 @@ describe('NoteList', () => {
 
       // Assert
       expect(noteItems).toHaveLength(mockNotes.length);
+    });
+
+    it('should render the skeleton while data is fetching', async () => {
+      vi.mocked(getNotes).mockImplementation(() => {
+        return new Promise(() => {});
+      });
+      const { getByRole } = renderComponent();
+
+      const skeleton = getByRole('progressbar');
+
+      await expect.element(skeleton).toBeInTheDocument();
+    });
+
+    it('should display error message while fetch function throw error', async () => {
+      const errorMessage = 'Error from vitest';
+      vi.mocked(getNotes).mockRejectedValue(new Error(errorMessage));
+      const { getByRole } = renderComponent();
+
+      const alert = getByRole('alert');
+
+      await expect.element(alert).toBeInTheDocument();
     });
   });
 });
