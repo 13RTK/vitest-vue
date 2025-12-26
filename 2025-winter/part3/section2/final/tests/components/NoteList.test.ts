@@ -5,6 +5,9 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import { render } from 'vitest-browser-vue';
 import { worker } from '../mocks/server';
+import { delay, http, HttpResponse } from 'msw';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 describe('NoteList', () => {
   function renderComponent() {
@@ -45,10 +48,14 @@ describe('NoteList', () => {
       expect(noteItems.length).toBeGreaterThan(0);
     });
 
-    it.skip('should render the skeleton while data is fetching', async () => {
-      vi.mocked(getNotes).mockImplementation(() => {
-        return new Promise(() => {});
-      });
+    it('should render the skeleton while data is fetching', async () => {
+      worker.use(
+        http.get(API_URL, async () => {
+          await delay();
+
+          return HttpResponse.json([]);
+        })
+      );
       const { getByRole } = renderComponent();
 
       const skeleton = getByRole('progressbar');
@@ -56,9 +63,12 @@ describe('NoteList', () => {
       await expect.element(skeleton).toBeInTheDocument();
     });
 
-    it.skip('should display error message while fetch function throw error', async () => {
-      const errorMessage = 'Error from vitest';
-      vi.mocked(getNotes).mockRejectedValue(new Error(errorMessage));
+    it('should display error message while fetch function throw error', async () => {
+      worker.use(
+        http.get(API_URL, () => {
+          return HttpResponse.error();
+        })
+      );
       const { getByRole } = renderComponent();
 
       const alert = getByRole('alert');
