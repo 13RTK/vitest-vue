@@ -20,9 +20,12 @@
     "@tanstack/vue-query": "^5.92.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.25",
-    "vue-toastification": "2.0.0-rc.5"
+    "vue-toastification": "2.0.0-rc.5",
+    "zod": "^4.2.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@msw/data": "^1.1.2",
     "@tailwindcss/vite": "^4.1.18",
     "@tsconfig/node24": "^24.0.3",
     "@types/node": "^24.10.1",

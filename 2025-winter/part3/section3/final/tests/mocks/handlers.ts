@@ -1,56 +1,15 @@
 import { http, HttpResponse } from 'msw';
+import { notes } from './collections/note';
+import { generateNote } from './utils/note';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+await notes.createMany(10, (idx: number) => {
+  return generateNote(idx + 1);
+});
+
 export const handlers = [
   http.get(API_URL, () => {
-    return HttpResponse.json([
-      {
-        id: '1',
-        title: 'How do I create an account?',
-        content:
-          "Click the 'Sign Up' button in the top right corner and follow the registration process.",
-      },
-      {
-        id: '2',
-        title: 'Can I reset my password?',
-        content:
-          "Yes, you can reset your password by clicking the 'Forgot Password' link in the login form.",
-      },
-      {
-        id: '3',
-        title: 'How do I log in?',
-        content:
-          "Click the 'Log In' button in the top right corner and enter your email and password.",
-      },
-      {
-        id: '4',
-        title: 'Can I log out?',
-        content:
-          "Yes, you can log out by clicking the 'Log Out' button in the top right corner.",
-      },
-      {
-        id: '5',
-        title: 'How do I create a note?',
-        content:
-          "Click the 'Add Note' button in the top right corner and enter the note details.",
-      },
-      {
-        id: '6',
-        title: 'Can I edit a note?',
-        content:
-          "Yes, you can edit a note by clicking the 'Edit' button next to the note.",
-      },
-      {
-        id: '7',
-        title: 'How do I delete a note?',
-        content: "Click the 'Delete' button next to the note.",
-      },
-      {
-        id: '8',
-        title: 'Can I search for notes?',
-        content: 'Yes, you can search for notes by typing in the search bar.',
-      },
-    ]);
+    return HttpResponse.json(notes.all());
   }),
 ];
