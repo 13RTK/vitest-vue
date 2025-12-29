@@ -12,4 +12,12 @@ export const handlers = [
   http.get(API_URL, () => {
     return HttpResponse.json(notes.all());
   }),
+
+  http.delete<{ id: string }>(`${API_URL}/:id`, ({ params }) => {
+    const { id } = params;
+
+    const deletedNote = notes.delete((q) => q.where({ id: Number(id) }));
+
+    return HttpResponse.json(deletedNote);
+  }),
 ];

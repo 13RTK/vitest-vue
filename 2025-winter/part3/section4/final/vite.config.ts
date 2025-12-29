@@ -22,6 +22,7 @@ export default defineConfig({
   },
 
   test: {
+    setupFiles: ['./tests/setup.ts'],
     globals: true,
     browser: {
       enabled: true,

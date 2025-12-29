@@ -1,6 +1,4 @@
 import NoteList from '@/components/NoteList.vue';
-import { getNotes } from '@/services/apiNote';
-import type { Note } from '@/types/Note';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import { render } from 'vitest-browser-vue';
@@ -27,10 +25,6 @@ describe('NoteList', () => {
       },
     });
   }
-
-  beforeAll(() => worker.start());
-  afterEach(() => worker.resetHandlers());
-  afterAll(() => worker.stop());
 
   describe('render test', () => {
     it('should render note items with correct count', async () => {

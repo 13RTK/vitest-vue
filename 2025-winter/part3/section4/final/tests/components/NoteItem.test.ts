@@ -3,11 +3,8 @@ import type { Note } from '@/types/Note';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import Toast from 'vue-toastification';
-import { cleanup, render } from 'vitest-browser-vue';
-import { deleteNoteById } from '@/services/apiNote';
+import { render } from 'vitest-browser-vue';
 import { userEvent } from 'vitest/browser';
-
-vi.mock('@/services/apiNote');
 
 describe('NoteItem', () => {
   const mockNote: Note = {
@@ -46,7 +43,6 @@ describe('NoteItem', () => {
   describe('user interaction', () => {
     it('should render toaster after user click the delete button and success delete', async () => {
       document.body.innerHTML = '';
-      vi.mocked(deleteNoteById).mockResolvedValue(mockNote);
       const { getByRole, getByText } = renderComponent();
 
       const deleteButton = getByRole('button', {
