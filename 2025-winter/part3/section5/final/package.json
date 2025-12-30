@@ -26,6 +26,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.1.0",
     "@msw/data": "^1.1.2",
+    "@pinia/testing": "^1.0.3",
     "@tailwindcss/vite": "^4.1.18",
     "@tsconfig/node24": "^24.0.3",
     "@types/node": "^24.10.1",

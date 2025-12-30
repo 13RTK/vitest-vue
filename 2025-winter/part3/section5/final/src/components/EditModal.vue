@@ -5,8 +5,9 @@
       <div class="card bg-base-100 shrink-0">
         <div class="card-body">
           <fieldset class="fieldset">
-            <label class="label">Title</label>
+            <label for="title" class="label">Title</label>
             <input
+              id="title"
               type="text"
               class="input w-full"
               placeholder="Enter the note title"
@@ -17,8 +18,9 @@
               Limit 35 Characters
             </div>
 
-            <label class="label">Content</label>
+            <label for="content" class="label">Content</label>
             <textarea
+              id="content"
               class="textarea w-full"
               placeholder="Enter the note content"
               v-model="content"
