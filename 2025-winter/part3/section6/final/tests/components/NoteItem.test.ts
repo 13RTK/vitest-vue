@@ -42,7 +42,6 @@ describe('NoteItem', () => {
 
   describe('user interaction', () => {
     it('should render toaster after user click the delete button and success delete', async () => {
-      document.body.innerHTML = '';
       const { getByRole, getByText } = renderComponent();
 
       const deleteButton = getByRole('button', {

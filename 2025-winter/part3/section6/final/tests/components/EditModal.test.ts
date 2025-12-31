@@ -1,42 +1,29 @@
 import EditModal from '@/components/EditModal.vue';
 import Toast from 'vue-toastification';
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { createTestingPinia } from '@pinia/testing';
 import { render } from 'vitest-browser-vue';
 import { openModal } from '@/composables/model';
-import { ref } from 'vue';
 import type { Note } from '@/types/Note';
 import { useNoteStore } from '@/stores/note';
 import { storeToRefs } from 'pinia';
+import { registerPlugin } from '../plugin';
+import { userEvent } from 'vitest/browser';
 
 describe('EditModal', () => {
-  const initialState = ref<Note>({
-    id: 1,
-    title: 'initial title',
-    content: 'initial content',
-  });
-
   function renderComponent() {
     return render(EditModal, {
       global: {
-        plugins: [
-          createTestingPinia({
-            initialState,
-          }),
-          VueQueryPlugin,
-          Toast,
-        ],
+        plugins: [...registerPlugin(), Toast],
       },
     });
   }
 
-  describe('render test', () => {
-    const mockedNoteStoreForAdd: Note = {
-      id: 999,
-      title: 'add title',
-      content: 'add content',
-    };
+  const mockedNoteStoreForAdd: Note = {
+    id: 999,
+    title: 'add title',
+    content: 'add content',
+  };
 
+  describe('render test', () => {
     it('should render add form with correct content at the initialize stage', async () => {
       const { getByLabelText } = renderComponent();
       const { note } = storeToRefs(useNoteStore());
@@ -50,5 +37,23 @@ describe('EditModal', () => {
       await expect.element(content).toHaveValue(mockedNoteStoreForAdd.content);
     });
   });
-  describe('user interaction', () => {});
+
+  describe('user interaction', () => {
+    it('should render toaster after user click the add button', async () => {
+      const { getByRole, getByText } = renderComponent();
+      const { note } = storeToRefs(useNoteStore());
+      note.value = mockedNoteStoreForAdd;
+      openModal('my_modal_5');
+
+      const addButton = getByRole('button', {
+        name: /add/i,
+      });
+
+      await userEvent.click(addButton);
+
+      const toast = getByText(/created successfully/i);
+
+      await expect.element(toast).toBeInTheDocument();
+    });
+  });
 });
